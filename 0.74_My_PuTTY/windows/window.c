@@ -203,6 +203,10 @@ static int use_italics;
 #define FONT_SHIFT	5
 #endif
 
+#ifdef PRM
+int hwnd_last_active;
+#endif
+
 static HFONT fonts[FONT_MAXNO];
 static LOGFONT lfont;
 static bool fontflag[FONT_MAXNO];
@@ -1289,6 +1293,23 @@ TrayIcone.hWnd = hwnd ;
     conf_cache_data();
 
     conftopalette();
+
+
+
+
+#ifdef PRM
+    conf_set_bool(conf, CONF_scrollbar, false);
+    conf_set_bool(conf, CONF_scrollbar_in_fullscreen, false);
+    conf_set_int(conf, CONF_window_has_sysmenu, 0);
+#endif
+
+
+
+
+
+
+
+
 
     /*
      * Guess some defaults for the window size. This all gets
@@ -3299,6 +3320,29 @@ static LRESULT CALLBACK WndProc(HWND hwnd, UINT message,
 	 */ 
 	POINT cursor_pt;
 #endif
+
+
+#ifdef PRM
+	switch (message)
+	{
+	case WM_MOUSEACTIVATE:
+		if (hwnd_parent_control != 0 && hwnd_last_active != hwnd_parent_control){
+			int hwnd_parent_window = GetAncestor((HWND)hwnd_parent_control, GA_ROOTOWNER);
+			// FILE *fp = NULL;
+			// fp = fopen("hwnd_parent_control.txt", "w+");
+			// fprintf(fp, "hwnd_parent_control = %d\n", hwnd_parent_control);
+			// fprintf(fp, "hwnd_parent_window = %d\n", hwnd_parent_window);
+			// fclose(fp);
+	    	BringWindowToTop(hwnd_parent_window);
+		}
+		break;
+	default:
+		break;
+	}
+#endif
+
+
+
     switch (message) {
       case WM_TIMER:
 	if ((UINT_PTR)wParam == TIMING_TIMER_ID) {
@@ -4435,6 +4479,7 @@ free(cmd);
 	if (message == WM_RBUTTONDOWN &&
 	    ((wParam & MK_CONTROL) ||
 	     (conf_get_int(conf, CONF_mouse_is_xterm) == 2))) {
+#ifndef PRM
 	    POINT cursorpos;
 
 	    show_mouseptr(true);    /* make sure pointer is visible */
@@ -4443,6 +4488,7 @@ free(cmd);
 			   TPM_LEFTALIGN | TPM_TOPALIGN | TPM_RIGHTBUTTON,
 			   cursorpos.x, cursorpos.y,
 			   0, hwnd, NULL);
+#endif
 	    break;
 	}
 	{
@@ -4565,6 +4611,15 @@ free(cmd);
 		wp = wParam; lp = lParam;
 		last_mousemove = WM_MOUSEMOVE;
 	    }
+
+#ifdef PRM
+	    {
+    		GUITHREADINFO thread_info;
+			thread_info.cbSize = sizeof(thread_info);
+			GetGUIThreadInfo(NULL, &thread_info);
+			hwnd_last_active = thread_info.hwndActive;
+	    }
+#endif
 	}
 	/*
 	 * Add the mouse position and message time to the random
@@ -7450,9 +7505,17 @@ static bool wintw_setup_draw_ctx(TermWin *tw)
 
 static void wintw_free_draw_ctx(TermWin *tw)
 {
+#ifdef PRM
+	if(wintw_hdc)
+	{
+#endif
     assert(wintw_hdc);
     free_hdc(wintw_hdc);
     wintw_hdc = NULL;
+
+#ifdef PRM
+	}
+#endif
 }
 
 static void real_palette_set(int n, int r, int g, int b)

@@ -2413,3 +2413,11 @@ void request_callback_notifications(toplevel_callback_notify_fn_t notify,
     (0x10000 + (((wch1) & 0x3FF) << 10) + ((wch2) & 0x3FF))
 
 #endif
+
+
+
+#define PRM
+
+#ifdef PRM
+int hwnd_parent_control;
+#endif

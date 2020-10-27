@@ -171,7 +171,8 @@ CFLAGS += 	 \
 		-I../macosx \
 		-I../../base64 \
 		-I../../bcrypt \
-		-I../../md5 -I../../regex -I../../url -I../../rutty
+		-I../../md5 -I../../regex -I../../url -I../../rutty \
+		-DMOD_PORTABLE \
 		
 
 # Autre flag a gérer
@@ -182,6 +183,8 @@ CFLAGS += 	 \
 # Autre flags
 # MOD_INTEGRATED_AGENT: intègre l'agent directement
 # MOD_INTEGRATED_KEYGEN: intègre le key generator directement
+
+
 
 CFLAGS_PLINK = -Wall -O2 -D_WINDOWS -DWIN32S_COMPAT \
 		-DMOD_PERSO -DMOD_RECONNECT -DNO_MOD_RUTTY \
@@ -1586,7 +1589,7 @@ window.o: ../windows/window.c ../putty.h ../terminal.h ../storage.h \
 		../sshsignals.h ../windows/winstuff.h ../unix/unix.h \
 		../puttymem.h ../windows/winhelp.h ../charset/charset.h
 	$(CC) $(COMPAT) $(CFLAGS) $(XFLAGS) -c ../windows/window.c \
-	-DBUILD_TIME=`date +'"%d/%m/%Y-%H:%M:%S(%Z)"'` \
+	-DBUILD_TIME=`date +'"%d/%m/%Y-%H:%M:%S"'` \
 	-DBUILD_VERSION=`cat version_major.txt` \
 	-DBUILD_SUBVERSION=`cat version_minor.txt` \
 	-DMASTER_PASSWORD=`cat ../../masterpassword.txt` \
@@ -1856,7 +1859,7 @@ adb.o: ../putty.h ../../adb/adb.c
 
 kitty.o: ../../kitty.c ../../kitty.h ../../kitty_savedump.c ../../kitty_launcher.c ../../kitty_launcher.h ../windows/window.c  ../../kitty_ini.h
 	$(CC) $(COMPAT) $(XFLAGS) $(CFLAGS) -c ../../kitty.c \
-	-DBUILD_TIME=`date +'"%d/%m/%Y-%H:%M:%S(%Z)"'` \
+	-DBUILD_TIME=`date +'"%d/%m/%Y-%H:%M:%S"'` \
 	-DBUILD_VERSION=`cat version_major.txt` \
 	-DBUILD_SUBVERSION=`cat version_minor.txt` \
 	-DMASTER_PASSWORD=`cat ../../masterpassword.txt`
@@ -1864,7 +1867,7 @@ kitty.o: ../../kitty.c ../../kitty.h ../../kitty_savedump.c ../../kitty_launcher
 kitty_portable.o: ../../kitty.c ../../kitty.h ../../kitty_savedump.c ../../kitty_launcher.c ../../kitty_launcher.h
 	$(CC) $(COMPAT) $(XFLAGS) $(CFLAGS) -o kitty_portable.o -c ../../kitty.c \
 	-DMOD_PORTABLE \
-	-DBUILD_TIME=`date +'"%d/%m/%Y-%H:%M:%S(%Z)"'` \
+	-DBUILD_TIME=`date +'"%d/%m/%Y-%H:%M:%S"'` \
 	-DBUILD_VERSION=`cat version_major.txt` \
 	-DBUILD_SUBVERSION=`cat version_minor.txt` \
 	-DMASTER_PASSWORD=`cat ../../masterpassword.txt`
@@ -1872,7 +1875,7 @@ kitty_portable.o: ../../kitty.c ../../kitty.h ../../kitty_savedump.c ../../kitty
 kitty_nohyperlink.o: ../../kitty.c ../../kitty.h ../../kitty_savedump.c ../../kitty_launcher.c ../../kitty_launcher.h
 	$(CC) $(COMPAT) $(XFLAGS) $(CFLAGS) -o kitty_nohyperlink.o -c ../../kitty.c \
 	-DMOD_NOHYPERLINK \
-	-DBUILD_TIME=`date +'"%d/%m/%Y-%H:%M:%S(%Z)"'` \
+	-DBUILD_TIME=`date +'"%d/%m/%Y-%H:%M:%S"'` \
 	-DBUILD_VERSION=`cat version_major.txt` \
 	-DBUILD_SUBVERSION=`cat version_minor.txt` \
 	-DMASTER_PASSWORD=`cat ../../masterpassword.txt`
@@ -1935,7 +1938,7 @@ window_notrans.o: ../windows/window.c ../putty.h ../terminal.h ../storage.h \
 		../puttymem.h ../windows/winhelp.h ../charset/charset.h
 	$(CC) $(COMPAT) $(CFLAGS) $(XFLAGS) -o window_notrans.o -c ../windows/window.c \
 	-DMOD_NOTRANSPARENCY \
-	-DBUILD_TIME=`date +'"%d/%m/%Y-%H:%M:%S(%Z)"'` \
+	-DBUILD_TIME=`date +'"%d/%m/%Y-%H:%M:%S"'` \
 	-DBUILD_VERSION=`cat version_major.txt` \
 	-DBUILD_SUBVERSION=`cat version_minor.txt` \
 	-DMASTER_PASSWORD=`cat ../../masterpassword.txt` \
@@ -1949,7 +1952,7 @@ window_nohyperlink.o: ../windows/window.c ../putty.h ../terminal.h ../storage.h 
 		../../kitty.c ../../kitty_launcher.c ../../kitty_image.c ../../kitty_crypt.c ../../kitty_savedump.c
 	$(CC) $(COMPAT) $(CFLAGS) $(XFLAGS) -o window_nohyperlink.o -c ../windows/window.c \
 	-DMOD_NOHYPERLINK \
-	-DBUILD_TIME=`date +'"%d/%m/%Y-%H:%M:%S(%Z)"'` \
+	-DBUILD_TIME=`date +'"%d/%m/%Y-%H:%M:%S"'` \
 	-DBUILD_VERSION=`cat version_major.txt` \
 	-DBUILD_SUBVERSION=`cat version_minor.txt` \
 	-DMASTER_PASSWORD=`cat ../../masterpassword.txt`
@@ -1960,7 +1963,7 @@ window_portable.o: ../windows/window.c ../putty.h ../terminal.h ../storage.h \
 		../sshsignals.h ../windows/winstuff.h ../unix/unix.h \
 		../puttymem.h ../windows/winhelp.h ../charset/charset.h
 	$(CC) $(COMPAT) $(CFLAGS) $(XFLAGS) -o window_portable.o -c ../windows/window.c \
-	-DBUILD_TIME=`date +'"%d/%m/%Y-%H:%M:%S(%Z)"'` \
+	-DBUILD_TIME=`date +'"%d/%m/%Y-%H:%M:%S"'` \
 	-DMOD_PORTABLE \
 	-DBUILD_VERSION=`cat version_major.txt` \
 	-DBUILD_SUBVERSION=`cat version_minor.txt` \
@@ -2175,7 +2178,7 @@ cross64:
 # -DMASTER_PASSWORD=`cat ../../masterpassword.txt` 			à la compilation de settings.o
 # -DMASTER_PASSWORD=`cat ../../masterpassword.txt` 			à la compilation de winplink.o
 # -DMASTER_PASSWORD=`cat ../../masterpassword.txt` 			à la compilation de winsftp.o
-# 	-DBUILD_TIME=`date +'"%d/%m/%Y-%H:%M:%S(%Z)"'` \ 		à la compilation de window.o
+# 	-DBUILD_TIME=`date +'"%d/%m/%Y-%H:%M:%S"'` \ 		à la compilation de window.o
 #	-DBUILD_VERSION=`cat version_major.txt` \
 #	-DBUILD_SUBVERSION=`cat version_minor.txt` \
 #	-DMASTER_PASSWORD=`cat ../../masterpassword.txt` \
